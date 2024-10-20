@@ -888,6 +888,7 @@ def menuDataMobilCustomer(login, customer, mobil):
         i = input("Input Index Menu : ")
 
         if i == "1":
+            print("\n\n")
             printDataMobil()
             menuFilterDataMobil()
 
@@ -905,7 +906,121 @@ def menuDataMobilCustomer(login, customer, mobil):
 
 
 def menuFilterDataMobil():
-    pass
+    
+    if len(mobil) != 0:
+        
+        while True:
+            print("\nMenu filtering data dari semua data mobil\n[1] Nama Mobil\n[2] Harga\n[3] Transmisi\n[4] Bahan Bakar\n[5] Kembali")
+            i = input("Masukkan Indeks Menu : ")
+
+            if i == "1":
+                printMobilFilter("mobil")
+
+            elif i == "2":
+                printMobilFilter("harga")
+
+            elif i == "3":
+                printMobilFilter("transmisi")
+
+            elif i == "4":
+                printMobilFilter("bahanBakar")
+
+            elif i == "5":
+                break
+
+            else:
+                print("Input Salah.\n")
+
+            
+def printMobilFilter(kolom):
+    values = []
+        
+    if kolom != "harga":
+        filter = input("Mencari data : ").capitalize()
+
+        if filter == "At" or filter == "Mt":
+            filter = filter.upper()
+
+        for i,j in mobil.items():
+            if j[kolom] == filter:
+                innerValues = []
+                innerValues.append(i)
+                innerValues.append(mobil[i]["mobil"])
+                innerValues.append(mobil[i]["harga"])
+                innerValues.append(mobil[i]["transmisi"])
+                innerValues.append(mobil[i]["bahanBakar"])
+                innerValues.append(mobil[i]["warna"])
+                
+                if j["statusPinjam"]:
+                    innerValues.append("Sedang di Pinjam")
+
+                else:
+                    innerValues.append("Tidak di Pinjam")
+
+                innerValues.append(j["lamaHari"])
+                values.append(innerValues)
+
+    else:
+        while True:
+            max = input("Masukkan harga maksimal : ")
+            min = input("Masukkan harga minimal : ")
+
+            if max.isnumeric() and min.isnumeric():
+                
+                if int(max) > int(min):
+                    break
+
+                else:
+                    print("Nilai minimal lebih tinggi dari maksimal.")
+
+                    while True:
+                        k = input("Masih ingin melakukan filtering harga (ya/tidak) : ").lower()
+
+                        if k == "ya":
+                            break
+
+                        elif k == "tidak":
+                            return
+                        
+                        else:
+                            print("Input Salah.\n")
+            
+            else:
+                print("Input Salah.\n")
+                
+                while True:
+                    k = input("Masih ingin melakukan filtering harga (ya/tidak) : ").lower()
+
+                    if k == "ya":
+                        break
+
+                    elif k == "tidak":
+                        return
+                    
+                    else:
+                        print("Input Salah.\n")
+        
+        for i,j in mobil.items():
+            if j[kolom] <= int(max) and j[kolom] >= int(min):
+                innerValues = []
+                innerValues.append(i)
+                innerValues.append(mobil[i]["mobil"])
+                innerValues.append(mobil[i]["harga"])
+                innerValues.append(mobil[i]["transmisi"])
+                innerValues.append(mobil[i]["bahanBakar"])
+                innerValues.append(mobil[i]["warna"])
+                
+                if j["statusPinjam"]:
+                    innerValues.append("Sedang di Pinjam")
+
+                else:
+                    innerValues.append("Tidak di Pinjam")
+
+                innerValues.append(j["lamaHari"])
+                values.append(innerValues)
+
+    print("\n\n")
+    print(tabulate(values, headers=["Plat Mobil", "Mobil", "Harga", "Transmisi", "Bahan Bakar", "Warna", "Status Pinjam", "Lama Hari"], tablefmt="grid"))
 
 
 def meminjamMobil(login, customer, mobil):
