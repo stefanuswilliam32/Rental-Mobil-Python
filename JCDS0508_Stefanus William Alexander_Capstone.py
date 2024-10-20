@@ -228,7 +228,7 @@ def mengubahDataMobil(mobil):
     plat = input("\nMasukkan plat mobil : ").upper()
         
     if plat not in mobil:
-        print("\nPlat mobil tidak ada.")
+        print(f"\nPlat mobil {plat} tidak ada.")
         return
     
     else:
@@ -399,12 +399,10 @@ def menuMenghapusMobilAdmin(mobil):
 
 
 def menghapusMobil(mobil):
-
     plat = input("\nPlat yang akan dihapus : ").upper()
     if plat in mobil:
-        print(f"\nData Mobil\n\n- Plat : {plat}\n- Mobil : {mobil[plat]["mobil"]}\n- Harga : {mobil[plat]["harga"]}\n- Transmisi : {mobil[plat]["transmisi"]}\n- Warna : {mobil[plat]["warna"]}\n- Bahan Bakar : {mobil[plat]["bahanBakar"]}\n")
-    
         while True:
+            print(f"\nData Mobil\n\n- Plat : {plat}\n- Mobil : {mobil[plat]["mobil"]}\n- Harga : {mobil[plat]["harga"]}\n- Transmisi : {mobil[plat]["transmisi"]}\n- Warna : {mobil[plat]["warna"]}\n- Bahan Bakar : {mobil[plat]["bahanBakar"]}\n")
             j = input("Data Jadi Dihapus (ya/tidak): ").lower()
             
             if j == "ya":
@@ -550,7 +548,7 @@ def mengubahDataCustomerAdmin(customer):
     noTelpon = input("\nMasukkan no. telpon customer : ")
         
     if noTelpon not in customer:
-        print("\nNo. telpon customer tidak ada.")
+        print(f"\nNo. telpon customer {noTelpon} tidak ada.")
         return
 
     else:
@@ -631,13 +629,64 @@ def mengubahDataCustomerAdmin(customer):
             
             else:
                 print("Input Salah.\n")
-                        
+
+
+def menuMenghapusDataCustomerAdmin(customer):
+    while True:
+        
+        print("\n--------- Menghapus Data Customer ----------\n\n")
+        printDataCustomer
+        
+        if len(customer) != 0:
+            print("[1] Menghapus Data Customer\n[2] Kembali")
+            i = input("Input Index Menu : ")
+
+            if i == "1":
+                menghapusDataCustomer(customer)
+
+            elif i == "2":
+                break
+
+            else:
+                print("Input salah.\n")
+        
+        else:
+            print("\nData Customer Tidak Ada.\n")
+            return
+
+
+def menghapusDataCustomer(customer):
+    noTelpon = input("\nMasukkan no. telpon customer yang akan dihapus : ")
+    
+    if noTelpon in customer:
+        while True:
+            print(f"\n\n-No Telpon : {noTelpon}\n-Nama : {customer[noTelpon]["nama"]}\n-Alamat : {customer[noTelpon]["alamat"]}")
+            j = input("/nData Jadi Dihapus (ya/tidak): ").lower()
+            
+            if j == "ya":
+                if len(customer[noTelpon]["mobil"]) != 0:
+                    customer.pop(noTelpon)
+                    print("Data Customer Berhasil Dihapus.\n")
+                    return
+                else:
+                    print("Customer Sedang Meminjam Mobil!\n")
+                    return
+                
+            elif j == "tidak":
+                break
+
+            else:
+                print("Input salah.\n")
+
+    else:
+        print(f"\nNo. telpon customer {noTelpon} tidak ada.")
+
 
 def menuCostumer(login):
     print("\n\n------------------ Customer ------------------")
 
     print("Hallo", customer[login]["nama"])
-
+    
 
 def loginCustomer(login):
     while True:
