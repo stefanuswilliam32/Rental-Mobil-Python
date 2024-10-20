@@ -12,7 +12,7 @@ mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", 
          "D 4321 C" : {"mobil" : "New Fortuner 4x2", "transmisi" : "MT", "warna" : "Hitam", "bahanBakar" : "Dexlite", "harga" : 950000, "statusPinjam" : True, "lamaHari" : 1}, 
          "D 4332 L" : {"mobil" : "Alphard", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertamax", "harga" : 3250000, "statusPinjam" : False, "lamaHari" : 0}}
 
-#Database Customer berbentuk dictionary (mobil berisi list plat mobil dari mobil yang sedan dipinjam)
+#Database Customer berbentuk dictionary (mobil berisi list plat mobil dari mobil yang sedang dipinjam)
 customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat" : "Jl. Permana", "mobil" : ["D 4321 C"]},
             "08123456789" : {"password" : "23456789", "nama" : "Stefanus", "alamat" : "Jl. Abc", "mobil" : []},
             "0832132121" : {"password" : "34567890", "nama" : "Wina", "alamat" : "Jl. Def", "mobil" : ["D 2345 B", "D 1234 X"]}}
@@ -41,7 +41,7 @@ def menuAwalLogin(mobil, customer):
 def menuAdmin(mobil, customer):
     while True:
         print("\n\n------------------ Admin ------------------\n\n")
-        print("[1] Data Mobil\n[2] Data Customer\n[3] Logout")
+        print("[1] Data Mobil\n[2] Data Customer\n[3] Mengubah Status Mobil Yang Sedang Dipinjam\n[4] Logout")
         i = input("Input index menu : ")
 
         if i == "1":
@@ -51,6 +51,9 @@ def menuAdmin(mobil, customer):
             menuDataCustomerAdmin(customer)
 
         elif i == "3":
+            menuMengubahStatusMobilPinjam(mobil, customer)
+
+        elif i == "4":
             menuAwalLogin(mobil,customer)
         else:
             print("Input salah.\n")
@@ -73,7 +76,6 @@ def menuDataMobilAdmin(mobil):
 
         elif i == "4":
             menuMenghapusMobilAdmin(mobil)
-            
 
         elif i == "5":
             break
@@ -130,6 +132,7 @@ def printDataMobilPlat():
     if len(mobil) != 0:
         
         plat = input("\nMasukkan plat mobil : ").upper()
+
         if plat not in mobil:
             print("\nPlat mobil tidak ada.")
             return
@@ -694,6 +697,140 @@ def menghapusDataCustomer(customer):
 
     else:
         print(f"\nNo. telpon customer {noTelpon} tidak ada.")
+
+
+def menuMengubahStatusMobilPinjam(mobil, customer):
+    
+    if printDataMobilPinjam():
+        
+        while True:
+            print("\n[1] Menambah Lama Hari Peminjaman\n[2] Menghapus Peminjaman\n[3] Kembali")
+            i = input("Input Index Menu : ").lower()
+
+            if i == "1":
+                menambahLamaHariPeminjaman(mobil)
+
+            if i == "2":
+                menghapusPeminjamanMobil(mobil,customer)
+
+            if i == "3":
+                break
+
+            else:
+                print("Input salah.\n")
+
+
+def printDataMobilPinjam():
+    if len(mobil) != 0:
+        values = []
+        for i, j in mobil.items():
+            if j["statusPinjam"]:
+                innerValues = []
+                innerValues.append(i)
+                innerValues.append(j["mobil"])
+                innerValues.append(j["harga"])
+                innerValues.append(j["transmisi"])
+                innerValues.append(j["bahanBakar"])
+                innerValues.append(j["warna"])
+                innerValues.append(j["lamaHari"])
+                values.append(innerValues)
+        
+        if len(values) != 0:
+            print("\n\n---------- Data Mobil Siap Pinjam -----------\n")
+            print(tabulate(values, headers=["Plat Mobil", "Mobil", "Harga", "Transmisi", "Bahan Bakar", "Warna"], tablefmt="grid"))
+            return True
+        
+        else:
+            print("\nSaat ini tidak ada mobil yang sedang dipinjam.\n")
+            return False
+    
+    else: 
+        print("\nData Mobil Tidak Ada\n")
+        return False
+
+
+def menambahLamaHariPeminjaman(mobil):
+    
+    plat = input("\nMasukkan plat mobil : ").upper()
+        
+    if plat not in mobil:
+        print("\nPlat mobil tidak ada.")
+        return
+    
+    if mobil[plat]["statusPinjam"]:
+        print(f"\n\n-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n-Lama Hari : {mobil[plat]["lamaHari"]}\n")
+        
+        while True:
+            tambah = input("Masukkan Jumlah Hari Untuk Ditambahkan : ")
+
+            if tambah.isnumeric():
+                break
+
+            else:
+                print("Input salah.\n")
+
+            while True:
+                j = input("Jadi Menambah Hari Peminjaman (ya/tidak): ").lower()
+
+                if j == "ya":
+                    break
+
+                elif j == "tidak":
+                    return
+                
+                else:
+                    print("Input salah.\n")
+
+        while True:
+            j = input("Jadi Menambah Hari Peminjaman (ya/tidak): ").lower()
+
+            if j == "ya":
+                mobil[plat]["lamaHari"] += abs(int(tambah))
+                print(f"\nLama hari peminjaman dari mobil dengan plat {plat} berhasil ditambah.\n")
+                return
+
+            elif j == "tidak":
+                return
+            
+            else:
+                print("Input salah.\n")
+    
+    else:
+        print("Mobil sedang tidak dipinjam.\n")
+
+
+def menghapusPeminjamanMobil(mobil,customer):
+    plat = input("\nMasukkan plat mobil : ").upper()
+        
+    if plat not in mobil:
+        print("\nPlat mobil tidak ada.")
+        return
+    
+    if mobil[plat]["statusPinjam"]:
+        
+        for i,j in customer.items():
+            
+            if plat in j["mobil"]:
+                print(f"\n\n-Nama Peminjam : {customer[i]["nama"]}\n-No. Telpon : {i}-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n-Lama Hari : {mobil[plat]["lamaHari"]}\n")
+                
+                while True:
+                    j = input("Data Peminjaman Jadi Dihapus (ya/tidak): ").lower()
+
+                    if j == "ya":
+                        customer[i]["mobil"].remove(plat)
+                        mobil[plat]["statusPinjam"] = False
+                        mobil[plat]["lamaHari"] = 0
+                        print(f"\nMobil dengan {plat} sudah tidak dipinjam.\n")
+                        return
+                    
+                    elif j == "tidak":
+                        return
+                    
+                    else:
+                        print("Input Salah.\n")
+
+    else:
+        print("Mobil sedang tidak dipinjam.\n")  
 
 
 #Customer
