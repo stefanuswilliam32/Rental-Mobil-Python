@@ -1,6 +1,6 @@
 from tabulate import tabulate
 
-passwordAdmin = "Admin123" #Login sebagai admin dilakukan dengan cara memasukkan passwordAdmin123 saat login
+passwordAdmin = "Admin123" #Login sebagai admin dilakukan dengan cara memasukkan passwordAdmin saat login
 hargaDriver = 50000 #Harga menyewa mobil dengan driver ditambah 50rb per hari
 
 #Database Mobil berbentuk dictionary (Status Pinjam True = Mobil sedang di pinjam, False = Mobil sedang tidak dipinjam)
@@ -12,7 +12,6 @@ mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", 
          "D 4321 C" : {"mobil" : "New Fortuner 4x2", "transmisi" : "MT", "warna" : "Hitam", "bahanBakar" : "Dexlite", "harga" : 950000, "statusPinjam" : True, "lamaHari" : 1}, 
          "D 4332 L" : {"mobil" : "Alphard", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertamax", "harga" : 3250000, "statusPinjam" : False, "lamaHari" : 0}}
 
-
 #Database Customer berbentuk dictionary (mobil berisi list plat mobil dari mobil yang sedan dipinjam)
 customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat" : "Jl. Permana", "mobil" : ["D 4321 C"]},
             "08123456789" : {"password" : "23456789", "nama" : "Stefanus", "alamat" : "Jl. Abc", "mobil" : []},
@@ -21,7 +20,7 @@ customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat
 
 #Login
 def menuAwalLogin(mobil, customer):
-    print("------------------ Willy Rental ------------------\n")
+    print("\n\n------------------ Willy Rental ------------------\n")
             
     print("Halo Selamat Datang\n\n")
 
@@ -910,7 +909,44 @@ def menuFilterDataMobil():
 
 
 def meminjamMobil(login, customer, mobil):
-    printMobilSiapPinjam()
+    
+    if printMobilSiapPinjam():
+        while True:
+            i = input("Ingin Meminjam Mobil (ya/tidak) : ").lower()
+
+            if i == "ya":
+                plat = input("\nMasukkan plat mobil : ").upper()
+                
+                if plat in mobil():
+                    
+                    if mobil[plat]["statusPinjam"] == False:
+                        print(f"\n\n-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n")
+                        
+                        while True:
+                            j = input("Ingin meminjam mobil ini (ya/tidak): ").lower()
+
+                            if j == "ya":
+                                lamaHari = input("Masukkan lama hari mobil akan dipinjam : ")
+
+                            elif j == "tidak":
+                                return
+                            
+                            else:
+                                print("Input Salah.\n")
+
+                    else:
+                        print(f"\nMaaf mobil dengan plat {plat} sedang di pinjam.")
+                        return
+
+                else:
+                    print(f"\nMaaf plat mobil {plat} tidak ada.")
+                    return
+
+            elif i == "tidak":
+                return
+            
+            else:
+                print("Input Salah.\n")
 
 
 def printMobilSiapPinjam():
@@ -928,13 +964,17 @@ def printMobilSiapPinjam():
                 values.append(innerValues)
         
         if len(values) != 0:
+            print("\n\n---------- Data Mobil Siap Pinjam -----------\n")
             print(tabulate(values, headers=["Plat Mobil", "Mobil", "Harga", "Transmisi", "Bahan Bakar", "Warna"], tablefmt="grid"))
+            return True
         
         else:
             print("Maaf untuk saat ini peminjaman mobil sedang penuh.\n\n")
+            return False
     
     else: 
-        print("\nData Mobil Tidak Ada.\n")
+        print("\nData Mobil Tidak Ada. Harap Hubungi Admin\n")
+        return False
 
 
 menuAwalLogin(mobil, customer)
