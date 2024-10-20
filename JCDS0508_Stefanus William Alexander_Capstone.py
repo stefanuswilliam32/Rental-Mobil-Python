@@ -15,7 +15,7 @@ def menuAwalLogin(mobil, customer):
             menuAdmin(mobil, customer)
 
         elif login.isnumeric() and login[0] == '0' and login[1] == '8' and 9 < len(login) < 14:
-            loginCustomer(login)
+            loginCustomer(login, mobil, customer)
 
         else:
             print("Maaf input no. telpon anda salah\n")
@@ -683,13 +683,7 @@ def menghapusDataCustomer(customer):
 
 
 #Customer
-def menuCostumer(login):
-    print("\n\n------------------ Customer ------------------")
-
-    print("Hallo", customer[login]["nama"])
-    
-
-def loginCustomer(login):
+def loginCustomer(login, mobil, customer):
     while True:
         if login in customer:
             password = input("Masukkan password anda : ")
@@ -715,7 +709,7 @@ def loginCustomer(login):
 
                 print("Akun anda berhasil dibuat\n\n")
 
-                menuCostumer(login)
+                menuCostumer(login, mobil, customer)
 
             elif buatAkun.lower() == "tidak":
                 print("Terima kasih")
@@ -725,6 +719,12 @@ def loginCustomer(login):
                 print("Maaf input anda salah.")
                 break
 
+
+def menuCostumer(login, mobil, customer):
+    print("\n\n------------------ Customer ------------------")
+
+    print("Hallo", customer[login]["nama"])
+    
 
 mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 7}, 
          "D 2345 B" : {"mobil" : "Ayla", "transmisi" : "MT", "warna" : "Putih", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 2}, 
