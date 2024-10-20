@@ -1,7 +1,7 @@
 from tabulate import tabulate
 
 passwordAdmin = "Admin123" #Login sebagai admin dilakukan dengan cara memasukkan passwordAdmin123 saat login
-
+login = ""
 #Login
 def menuAwalLogin(mobil, customer):
     print("------------------ Willy Rental ------------------\n")
@@ -23,7 +23,6 @@ def menuAwalLogin(mobil, customer):
 
 #Admin
 def menuAdmin(mobil, customer):
-    
     while True:
         print("\n\n------------------ Admin ------------------\n\n")
         print("[1] Data Mobil\n[2] Data Customer\n[3] Logout")
@@ -561,9 +560,8 @@ def mengubahDataCustomerAdmin(customer):
                         i = input("\nData yang ingin diubah : ").lower()
 
                         if i == "no telpon" or i == "notelpon" or i == "telpon":
-                            noTelponBaru = input(f"No. Telpon {noTelpon} akan diganti dengan : ")
-                            
                             while True:
+                                noTelponBaru = input(f"No. Telpon {noTelpon} akan diganti dengan : ")
                                 if noTelponBaru.isnumeric() and noTelponBaru[0] == '0' and noTelponBaru[1] == '8' and 9 < len(noTelponBaru) < 14:
                                     if noTelponBaru not in customer:
                                         while True:
@@ -689,7 +687,7 @@ def loginCustomer(login, mobil, customer):
             password = input("Masukkan password anda : ")
             
             if password == customer[login]["password"]:
-                menuCostumer(login)
+                menuCustomer(login, mobil, customer)
             
             else:
                 print("Maaf password anda salah !!!\n")
@@ -709,7 +707,7 @@ def loginCustomer(login, mobil, customer):
 
                 print("Akun anda berhasil dibuat\n\n")
 
-                menuCostumer(login, mobil, customer)
+                menuCustomer(login, mobil, customer)
 
             elif buatAkun.lower() == "tidak":
                 print("Terima kasih")
@@ -720,11 +718,153 @@ def loginCustomer(login, mobil, customer):
                 break
 
 
-def menuCostumer(login, mobil, customer):
-    print("\n\n------------------ Customer ------------------")
+def menuCustomer(login, mobil, customer):
+    while True:
 
-    print("Hallo", customer[login]["nama"])
+        print("\n\n---------------- Customer -----------------\n\n")
+        print(f"Hallo {customer[login]["nama"]}\n\n")
+        print("[1] Data Akun\n[2] Data Mobil\n[3] Data Pinjaman Mobil\n[4] Logout")
+        i = input("Input index menu : ")
+
+        if i == "1":
+            menuDataAkun(login, customer)
+
+        elif i == "2":
+            pass
+
+        elif i == "3":
+            pass
+        
+        elif i == "4":
+            menuAwalLogin(mobil, customer)
+        else:
+            print("Input salah.\n")
+
+
+def menuDataAkun(login, customer):
+    while True:
+        
+        print("\n---------------- Data Akun -----------------\n\n")
+        
+        print("[1] Merubah Data\n[2] Mengganti Password\n[3] Kembali")
+        i = input("Input Index Menu : ")
+
+        if i == "1":
+            merubahDataCustomer(login, customer)
+
+        elif i == "2":
+            merubahPasswordCustomer(login, customer)
+        
+        elif i == "3":
+            break
+
+        else:
+            print("Input salah.\n")
     
+
+def merubahDataCustomer(login, customer):
+    while True:
+        print(f"\n\n-No Telpon : {login}\n-Nama : {customer[login]["nama"]}\n-Alamat : {customer[login]["alamat"]}\n")
+        j = input("\nData Jadi Diganti (ya/tidak): ").lower()
+                    
+        if j == "ya":
+            while True:
+                    i = input("\nData yang ingin diubah : ").lower()
+
+                    if i == "no telpon" or i == "notelpon" or i == "telpon":
+                        
+                        while True:
+                            noTelponBaru = input(f"No. Telpon {login} akan diganti dengan : ")
+                            if noTelponBaru.isnumeric() and noTelponBaru[0] == '0' and noTelponBaru[1] == '8' and 9 < len(noTelponBaru) < 14:
+                                if noTelponBaru not in customer:
+                                    while True:
+                                        j = input("Data Jadi Diganti dan Melakukan Login Ulang (ya/tidak): ").lower()
+
+                                        if j == "ya":
+                                            customer[noTelponBaru] = customer.pop(login)
+                                            print("\nNo. Telpon Berhasil Diganti.\n")
+                                            print("Silahkan Login Ulang.")
+                                            menuAwalLogin(mobil, customer)
+                                        
+                                        elif j == "tidak":
+                                            return
+                                        
+                                        else:
+                                            print("Input Salah.\n")
+
+                                else: 
+                                    print(f"\nNo. Telpon {noTelponBaru} Sudah Terdaftar.\n")
+                                    return
+                            
+                            else:
+                                print("Maaf input no. telpon anda salah\n")
+                    
+                    elif i == "nama":
+                        nama = input("Masukkan nama : ")
+                        
+                        while True:
+                            j = input("Data Jadi Diganti (ya/tidak): ").lower()
+
+                            if j == "ya":
+                                customer[login]["nama"] = nama.capitalize()
+                                print("\nData Customer Berhasil Diubah.\n")
+                                return
+                            
+                            elif j == "tidak":
+                                return
+                            
+                            else:
+                                print("Input Salah.\n")
+                    
+                    elif i == "alamat":
+                        alamat = input("Masukkan alamat : ")
+                        
+                        while True:
+                            j = input("Data Jadi Diganti (ya/tidak): ").lower()
+
+                            if j == "ya":
+                                customer[login]["alamat"] = alamat.capitalize()
+                                print("\nData Customer Berhasil Diubah.\n")
+                                return
+                            
+                            elif j == "tidak":
+                                return
+                            
+                            else:
+                                print("Input Salah.\n")
+
+                    else:
+                        print("Input Salah.\n")
+                
+        elif j == "tidak":
+            return
+        
+        else:
+            print("Input Salah.\n")
+
+
+def merubahPasswordCustomer(login, customer):
+    while True:
+        print(f"\nPassword Lama Anda : {customer[login]["password"]}\n")
+        passwordBaru = input("Masukkan Password Baru : ")
+        j = input("\nPassword Anda Jadi Diganti dan Melakukan Login Ulang (ya/tidak): ").lower()
+
+        if j == "ya":
+            
+            if passwordBaru !=  customer[login]["password"]:
+                customer[login]["password"] = passwordBaru
+                print("\nPassword Anda Berhasil Diganti, Silahkan Login Ulang.\n\n")
+                menuAwalLogin(login, customer)
+            
+            else:
+                print("Password Baru Anda Sama Dengan Password Lama.")
+        
+        elif j == "tidak":
+            return
+        
+        else:
+            print("Input Salah.\n")
+
 
 mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 7}, 
          "D 2345 B" : {"mobil" : "Ayla", "transmisi" : "MT", "warna" : "Putih", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 2}, 
