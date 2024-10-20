@@ -1,7 +1,8 @@
 from tabulate import tabulate
 
 passwordAdmin = "Admin123" #Login sebagai admin dilakukan dengan cara memasukkan passwordAdmin saat login
-hargaDriver = 50000 #Harga menyewa mobil dengan driver ditambah 50rb per hari
+hargaDriver = 100000 #Harga menyewa mobil dengan driver ditambah 100rb per hari
+hargaPengantaranMobil = 50000 #Harga mobil diantarkan kerumah akan dikenakan biaya 50rb
 
 #Database Mobil berbentuk dictionary (Status Pinjam True = Mobil sedang di pinjam, False = Mobil sedang tidak dipinjam)
 mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 7}, 
@@ -926,7 +927,89 @@ def meminjamMobil(login, customer, mobil):
                             j = input("Ingin meminjam mobil ini (ya/tidak): ").lower()
 
                             if j == "ya":
-                                lamaHari = input("Masukkan lama hari mobil akan dipinjam : ")
+                                while True:
+                                    lamaHari = input("Masukkan lama hari mobil akan dipinjam : ")
+
+                                    if lamaHari.isnumeric():
+                                        break
+
+                                    else:
+                                        print("Input Salah.\n")
+                                        while True:
+                                            j = input("Melanjutkan peminjaman mobil (ya/tidak) : ")
+
+                                            if j.lower() == "ya":
+                                                break
+
+                                            elif j.lower() == "tidak":
+                                                return
+
+                                            else:
+                                                print("Input Salah.")
+                                
+                                while True:
+                                    driver = input("Apakah ingin menggunakan jasa driver dengan biaya 100 ribu / hari (ya/tidak) : ").lower()
+
+                                    if driver == "ya":
+                                        hargaPengantaranMobil = 0
+                                        break
+                                    
+                                    elif driver == "tidak":
+                                        hargaDriver = 0
+
+                                        while True:
+                                            antar = input("Apakah mobil ingin diantar kerumah dengan biaya 50 ribu (ya/tidak) : ").lower()
+
+                                            if antar == "ya":
+                                                break
+
+                                            elif antar == "tidak":
+                                                hargaPengantaranMobil = 0
+                                                break
+
+                                            else:
+                                                print("Input Salah.\n")
+
+                                        break
+
+                                    else:
+                                        print("Input Salah.\n")
+
+                                print("\n---- Detail Harga Total Peminjaman Mobil ----\n\n")
+                                print(f"-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n\n-Harga :                       {mobil[plat]["harga"]}")
+                                print(f"-Lama Hari Peminjaman :        {lamaHari} hari")
+                                print(f"-Harga Penggunaan Driver :     {hargaDriver} / hari")
+                                print(f"-Harga Pengantaran Kendaraan : {hargaPengantaranMobil}")
+
+                                totalPembayaran = (mobil[plat]["harga"] + hargaDriver) * abs(int(lamaHari)) + hargaPengantaranMobil
+
+                                print(f"Total Harga :                   {totalPembayaran}\n\n")
+
+                                while True:
+                                    j = input("Apakah jadi melakukan peminjaman (ya/tidak) : ").lower()
+
+                                    if j == "ya":
+                                        customer[login]["mobil"].append(plat)
+                                        mobil[plat]["statusPinjam"] = True
+                                        mobil[plat]["lamaHari"] = abs(int(lamaHari))
+
+                                        if driver == "ya":
+                                            print("\n Pembayaran dilakukan saat mobil datang")
+                                        
+                                        elif antar == "ya":
+                                            print("\n Pembayaran dilakukan saat mobil diantar")
+
+                                        else:
+                                            print("\n Pembayaran dilakukan saat pengambilan mobil")
+
+                                        print(f"Terimakasih {customer[login]["nama"]} sudah menggunakan jasa GG Rental.\n\n")
+                                        return
+
+                                    elif j == "tidak":
+                                        return
+                                    
+                                    else:
+                                        print("Input Salah.\n")
 
                             elif j == "tidak":
                                 return
