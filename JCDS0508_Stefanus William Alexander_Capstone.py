@@ -1,9 +1,9 @@
 from tabulate import tabulate
 
-passwordAdmin = "Admin123"
+passwordAdmin = "Admin123" #Login sebagai admin dilakukan dengan cara memasukkan passwordAdmin123 saat login
 
-
-def menuAwal(mobil, customer):
+#Login
+def menuAwalLogin(mobil, customer):
     print("------------------ Willy Rental ------------------\n")
             
     print("Halo Selamat Datang\n\n")
@@ -21,6 +21,7 @@ def menuAwal(mobil, customer):
             print("Maaf input no. telpon anda salah\n")
 
 
+#Admin
 def menuAdmin(mobil, customer):
     
     while True:
@@ -35,8 +36,7 @@ def menuAdmin(mobil, customer):
             menuDataCustomerAdmin(customer)
 
         elif i == "3":
-            menuAwal(mobil, customer)
-
+            menuAwalLogin(mobil,customer)
         else:
             print("Input salah.\n")
 
@@ -682,6 +682,7 @@ def menghapusDataCustomer(customer):
         print(f"\nNo. telpon customer {noTelpon} tidak ada.")
 
 
+#Customer
 def menuCostumer(login):
     print("\n\n------------------ Customer ------------------")
 
@@ -740,4 +741,4 @@ customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat
             "0832132121" : {"password" : "34567890", "nama" : "Wina", "alamat" : "Jl. Def", "mobil" : ["D 2345 B", "D 1234 X"]}}
 
 
-menuAwal(mobil, customer)
+menuAwalLogin(mobil, customer)
