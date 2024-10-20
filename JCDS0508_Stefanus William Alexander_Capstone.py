@@ -710,10 +710,10 @@ def menuMengubahStatusMobilPinjam(mobil, customer):
             if i == "1":
                 menambahLamaHariPeminjaman(mobil)
 
-            if i == "2":
+            elif i == "2":
                 menghapusPeminjamanMobil(mobil,customer)
 
-            if i == "3":
+            elif i == "3":
                 break
 
             else:
@@ -786,7 +786,7 @@ def menambahLamaHariPeminjaman(mobil):
 
             if j == "ya":
                 mobil[plat]["lamaHari"] += abs(int(tambah))
-                print(f"\nLama hari peminjaman dari mobil dengan plat {plat} berhasil ditambah.\n")
+                print(f"\nLama hari peminjaman dari mobil dengan plat {plat} berhasil ditambah menjadi {mobil[plat]["lamaHari"]} hari.\n")
                 return
 
             elif j == "tidak":
@@ -811,7 +811,7 @@ def menghapusPeminjamanMobil(mobil,customer):
         for i,j in customer.items():
             
             if plat in j["mobil"]:
-                print(f"\n\n-Nama Peminjam : {customer[i]["nama"]}\n-No. Telpon : {i}-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n-Lama Hari : {mobil[plat]["lamaHari"]}\n")
+                print(f"\n\n-Nama Peminjam : {customer[i]["nama"]}\n-No. Telpon : {i}\n-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n-Lama Hari : {mobil[plat]["lamaHari"]}\n")
                 
                 while True:
                     j = input("Data Peminjaman Jadi Dihapus (ya/tidak): ").lower()
@@ -820,7 +820,7 @@ def menghapusPeminjamanMobil(mobil,customer):
                         customer[i]["mobil"].remove(plat)
                         mobil[plat]["statusPinjam"] = False
                         mobil[plat]["lamaHari"] = 0
-                        print(f"\nMobil dengan {plat} sudah tidak dipinjam.\n")
+                        print(f"\nMobil dengan plat {plat} sudah tidak dipinjam.\n")
                         return
                     
                     elif j == "tidak":
