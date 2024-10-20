@@ -1,7 +1,24 @@
 from tabulate import tabulate
 
 passwordAdmin = "Admin123" #Login sebagai admin dilakukan dengan cara memasukkan passwordAdmin123 saat login
-login = ""
+hargaDriver = 50000 #Harga menyewa mobil dengan driver ditambah 50rb per hari
+
+#Database Mobil berbentuk dictionary (Status Pinjam True = Mobil sedang di pinjam, False = Mobil sedang tidak dipinjam)
+mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 7}, 
+         "D 2345 B" : {"mobil" : "Ayla", "transmisi" : "MT", "warna" : "Putih", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 2}, 
+         "D 3456 F" : {"mobil" : "Brio Satya", "transmisi" : "AT", "warna" : "Abu", "bahanBakar" : "Pertalite", "harga" : 375000, "statusPinjam" : False, "lamaHari" : 0}, 
+         "D 5678 H" : {"mobil" : "All New Avanza 2022", "transmisi" : "MT", "warna" : "Coklat", "bahanBakar" : "Pertamax", "harga" : 425000, "statusPinjam" : True, "lamaHari" : 4},
+         "D 4214 T" : {"mobil" : "New HRV 2022", "transmisi" : "AT", "warna" : "Silver", "bahanBakar" : "Pertamax", "harga" : 650000, "statusPinjam" : False, "lamaHari" : 0},  
+         "D 4321 C" : {"mobil" : "New Fortuner 4x2", "transmisi" : "MT", "warna" : "Hitam", "bahanBakar" : "Dexlite", "harga" : 950000, "statusPinjam" : True, "lamaHari" : 1}, 
+         "D 4332 L" : {"mobil" : "Alphard", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertamax", "harga" : 3250000, "statusPinjam" : False, "lamaHari" : 0}}
+
+
+#Database Customer berbentuk dictionary (mobil berisi list plat mobil dari mobil yang sedan dipinjam)
+customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat" : "Jl. Permana", "mobil" : ["D 4321 C"]},
+            "08123456789" : {"password" : "23456789", "nama" : "Stefanus", "alamat" : "Jl. Abc", "mobil" : []},
+            "0832132121" : {"password" : "34567890", "nama" : "Wina", "alamat" : "Jl. Def", "mobil" : ["D 2345 B", "D 1234 X"]}}
+
+
 #Login
 def menuAwalLogin(mobil, customer):
     print("------------------ Willy Rental ------------------\n")
@@ -727,10 +744,10 @@ def menuCustomer(login, mobil, customer):
         i = input("Input index menu : ")
 
         if i == "1":
-            menuDataAkun(login, customer)
+            menuDataAkunCustomer(login, customer)
 
         elif i == "2":
-            pass
+            menuDataMobilCustomer(login, customer, mobil)
 
         elif i == "3":
             pass
@@ -741,7 +758,7 @@ def menuCustomer(login, mobil, customer):
             print("Input salah.\n")
 
 
-def menuDataAkun(login, customer):
+def menuDataAkunCustomer(login, customer):
     while True:
         
         print("\n---------------- Data Akun -----------------\n\n")
@@ -866,19 +883,58 @@ def merubahPasswordCustomer(login, customer):
             print("Input Salah.\n")
 
 
-mobil = {"D 1234 X" : {"mobil" : "Ayla", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 7}, 
-         "D 2345 B" : {"mobil" : "Ayla", "transmisi" : "MT", "warna" : "Putih", "bahanBakar" : "Pertalite", "harga" : 325000, "statusPinjam" : True, "lamaHari" : 2}, 
-         "D 3456 F" : {"mobil" : "Brio Satya", "transmisi" : "AT", "warna" : "Abu", "bahanBakar" : "Pertalite", "harga" : 375000, "statusPinjam" : False, "lamaHari" : 0}, 
-         "D 5678 H" : {"mobil" : "All New Avanza 2022", "transmisi" : "MT", "warna" : "Coklat", "bahanBakar" : "Pertamax", "harga" : 425000, "statusPinjam" : True, "lamaHari" : 4},
-         "D 4214 T" : {"mobil" : "New HRV 2022", "transmisi" : "AT", "warna" : "Silver", "bahanBakar" : "Pertamax", "harga" : 650000, "statusPinjam" : False, "lamaHari" : 0},  
-         "D 4321 C" : {"mobil" : "New Fortuner 4x2", "transmisi" : "MT", "warna" : "Hitam", "bahanBakar" : "Dexlite", "harga" : 950000, "statusPinjam" : True, "lamaHari" : 1}, 
-         "D 4332 L" : {"mobil" : "Alphard", "transmisi" : "AT", "warna" : "Hitam", "bahanBakar" : "Pertamax", "harga" : 3250000, "statusPinjam" : False, "lamaHari" : 0}}
+def menuDataMobilCustomer(login, customer, mobil):
+    while True:
+        
+        print("\n---------------- Data Mobil -----------------\n\n")
+        
+        print("[1] Melihat Daftar Mobil\n[2] Meminjam Mobil\n[3] Kembali")
+        i = input("Input Index Menu : ")
+
+        if i == "1":
+            printDataMobil()
+            menuFilterDataMobil()
+
+        elif i == "2":
+            meminjamMobil(login, customer, mobil)
+        
+        elif i == "3":
+            break
+
+        else:
+            print("Input salah.\n")
 
 
+def menuFilterDataMobil():
+    pass
 
-customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat" : "Jl. Permana", "mobil" : ["D 4321 C"]},
-            "08123456789" : {"password" : "23456789", "nama" : "Stefanus", "alamat" : "Jl. Abc", "mobil" : []},
-            "0832132121" : {"password" : "34567890", "nama" : "Wina", "alamat" : "Jl. Def", "mobil" : ["D 2345 B", "D 1234 X"]}}
+
+def meminjamMobil(login, customer, mobil):
+    printMobilSiapPinjam()
+
+
+def printMobilSiapPinjam():
+    if len(mobil) != 0:
+        values = []
+        for i, j in mobil.items():
+            if j["statusPinjam"] == False:
+                innerValues = []
+                innerValues.append(i)
+                innerValues.append(j["mobil"])
+                innerValues.append(j["harga"])
+                innerValues.append(j["transmisi"])
+                innerValues.append(j["bahanBakar"])
+                innerValues.append(j["warna"])
+                values.append(innerValues)
+        
+        if len(values) != 0:
+            print(tabulate(values, headers=["Plat Mobil", "Mobil", "Harga", "Transmisi", "Bahan Bakar", "Warna"], tablefmt="grid"))
+        
+        else:
+            print("Maaf untuk saat ini peminjaman mobil sedang penuh.\n\n")
+    
+    else: 
+        print("\nData Mobil Tidak Ada.\n")
 
 
 menuAwalLogin(mobil, customer)
