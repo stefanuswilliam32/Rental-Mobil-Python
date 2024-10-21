@@ -1093,7 +1093,7 @@ def menuFilterDataMobil():
     if len(mobil) != 0:
         
         while True:
-            print("\nMenu filtering data dari semua data mobil\n[1] Nama Mobil\n[2] Harga\n[3] Transmisi\n[4] Bahan Bakar\n[5] Kembali")
+            print("\nMenu filtering data dari semua data mobil\n[1] Nama Mobil\n[2] Harga\n[3] Transmisi(AT/MT)\n[4] Bahan Bakar\n[5] Kembali")
             i = input("Masukkan Indeks Menu : ")
 
             if i == "1":
