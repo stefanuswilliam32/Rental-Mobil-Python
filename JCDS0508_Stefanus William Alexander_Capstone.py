@@ -23,7 +23,7 @@ def menuAwalLogin(mobil, customer):
     while True:
         print("\n\n------------------ GG Rental ------------------\n")
         print("Halo Selamat Datang\n\n")
-        login = input("Tolong masukkan no telpon anda dengan format (08xxxxxxxxxx) : ")
+        login = input("Tolong Masukkan No Telpon Anda Dengan Format (08xxxxxxxxxx) : ")
 
         if login == passwordAdmin:
             menuAdmin(mobil, customer)
@@ -53,6 +53,7 @@ def menuAdmin(mobil, customer):
 
         elif i == "4":
             menuAwalLogin(mobil,customer)
+
         else:
             print("Input salah.\n")
 
@@ -103,6 +104,7 @@ def menuMenampilkanDataMobilAdmin():
 def printDataMobil():
     if len(mobil) != 0:
         values = []
+        
         for i, j in mobil.items():
             innerValues = []
             innerValues.append(i)
@@ -111,6 +113,7 @@ def printDataMobil():
             innerValues.append(j["transmisi"])
             innerValues.append(j["bahanBakar"])
             innerValues.append(j["warna"])
+            
             if j["statusPinjam"]:
                 innerValues.append("Sedang di Pinjam")
 
@@ -123,13 +126,13 @@ def printDataMobil():
         print(tabulate(values, headers=["Plat Mobil", "Mobil", "Harga", "Transmisi", "Bahan Bakar", "Warna", "Status", "Lama Hari"], tablefmt="grid"))
     
     else: 
-        print("\nData Mobil Tidak Ada.\n")
+        print("\nData mobil tidak ada.\n")
 
 
 def printDataMobilPlat():
     if len(mobil) != 0:
         
-        plat = input("\nMasukkan plat mobil : ").upper()
+        plat = input("\nMasukkan Plat Mobil : ").upper()
 
         if plat not in mobil:
             print("\nPlat mobil tidak ada.")
@@ -144,7 +147,7 @@ def printDataMobilPlat():
         print(f"\n\n-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n-Status : {status}\n-Lama Hari : {mobil[plat]["lamaHari"]}\n")
     
     else:
-        print("\nData Mobil Tidak Ada.\n")
+        print("\nData nobil tidak ada.\n")
 
 
 def menuMenambahMobilAdmin(mobil):
@@ -165,22 +168,23 @@ def menuMenambahMobilAdmin(mobil):
 
 
 def menambahMobil(mobil):
-    plat = input("\nMasukkan plat mobil : ").upper()
+    plat = input("\nMasukkan Plat Mobil : ").upper()
     
     if plat in mobil.keys():
         print("\nPlat mobil sudah ada.\n")
         return
 
-    jenisMobil = input("Masukkan jenis mobil : ")
+    jenisMobil = input("Masukkan Jenis Mobil : ")
     
     while True:
-        harga = input("Masukkan harga sewa : ")
+        harga = input("Masukkan Harga Sewa : ")
+        
         if harga.isnumeric():
             break
         print("\nInput harga salah")
 
         while True:
-            j = input("Melanjutkan penambahan mobil (ya/tidak) : ")
+            j = input("Melanjutkan Penambahan Mobil (ya/tidak) : ")
 
             if j.lower() == "ya":
                 break
@@ -189,14 +193,13 @@ def menambahMobil(mobil):
                 return
 
             else:
-                print("Input Salah.")
+                print("Input salah.")
 
-    transmisi = input("Masukkan transmisi (AT/MT): ")
-    bahanBakar = input("Masukkan bahan bakar : ")
-    warna = input("Masukkan warna : ")
-
+    transmisi = input("Masukkan Transmisi (AT/MT): ")
+    bahanBakar = input("Masukkan Bahan Bakar : ")
+    warna = input("Masukkan Warna : ")
     print(f"\n\n-Plat Mobil : {plat}\n-Mobil : {jenisMobil}\n-Harga : {harga}\n-Transmisi : {transmisi}\n-Bahan Bakar : {bahanBakar}\n-Warna : {warna}\n")
-    i = input("Mobil jadi ditambahkan (ya/tidak) : ")
+    i = input("Mobil Jadi Ditambahkan (ya/tidak) : ")
 
     if i == "ya":
         mobil[plat.upper()] = {"mobil" : jenisMobil.capitalize(),
@@ -208,7 +211,7 @@ def menambahMobil(mobil):
         "lamaHari" : 0}
 
         sortingMobilHarga(mobil)
-        print("\nData Mobil Berhasil ditambahkan.\n")
+        print("\nData mobil berhasil ditambahkan.\n")
  
 
 def sortingMobilHarga(mobil):
@@ -236,12 +239,12 @@ def menuMengubahDataMobilAdmin(mobil):
                 print("Input salah.\n")
 
         else:
-            print("\nData Mobil Tidak Ada.\n")
+            print("\nData mobil tidak ada.\n")
             return
 
 
 def mengubahDataMobil(mobil):
-    plat = input("\nMasukkan plat mobil : ").upper()
+    plat = input("\nMasukkan Plat Mobil : ").upper()
         
     if plat not in mobil:
         print(f"\nPlat mobil {plat} tidak ada.")
@@ -253,19 +256,21 @@ def mengubahDataMobil(mobil):
             j = input("Data Jadi Diganti (ya/tidak): ").lower()
             
             if j == "ya":
+                
                 while True:
-                    i = input("\nData yang ingin diubah : ").lower()
+                    i = input("\nData Yang Ingin Diubah : ").lower()
 
                     if i == "plat":
-                        platGanti = input(f"Plat {plat} akan diganti dengan : ").upper()
+                        platGanti = input(f"Plat {plat} Akan Diganti Dengan : ").upper()
                         
                         if platGanti not in mobil.keys():
+                            
                             while True:
                                 j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                                 if j == "ya":
                                     mobil[platGanti] = mobil.pop(plat)
-                                    print("\nPlat Mobil Berhasil Diganti.\n")
+                                    print("\nPlat mobil berhasil diganti.\n")
                                     sortingMobilHarga(mobil)
                                     return
                                 
@@ -273,41 +278,42 @@ def mengubahDataMobil(mobil):
                                     return
                                 
                                 else:
-                                    print("Input Salah.\n")
+                                    print("Input salah.\n")
                             
 
                         else: 
-                            print(f"Plat {platGanti} Sudah Terdaftar.\n")
+                            print(f"Plat {platGanti} sudah terdaftar.\n")
                             return
 
                     elif i == "mobil":
-                        jenisMobil = input("Masukkan jenis mobil : ")
+                        jenisMobil = input("Masukkan Jenis Mobil : ")
                         
                         while True:
                             j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                             if j == "ya":
                                 mobil[plat]["mobil"] = jenisMobil.capitalize()
-                                print("\nData Mobil Berhasil Diubah.\n")
+                                print("\nData mobil berhasil diubah.\n")
                                 return
                             
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
 
 
                     elif i == "harga":
+                        
                         while True:
-                            harga = input("Masukkan harga sewa : ")
+                            harga = input("Masukkan Harga Sewa : ")
                             if harga.isnumeric():
                                 break
 
-                            print("\nInput harga salah\n")
+                            print("\nInput harga salah.\n")
                             
                             while True:
-                                j = input("Melanjutkan perubahan harga mobil (ya/tidak) : ").lower()
+                                j = input("Melanjutkan Perubahan Harga Mobil (ya/tidak) : ").lower()
 
                                 if j == "ya":
                                     break
@@ -320,9 +326,10 @@ def mengubahDataMobil(mobil):
 
                         while True:
                             j = input("Data Jadi Diganti (ya/tidak): ").lower()
+
                             if j == "ya":
                                 mobil[plat]["harga"] = int(harga)
-                                print("\nData Mobil Berhasil Diubah.\n")
+                                print("\nData mobil berhasil diubah.\n")
                                 sortingMobilHarga(mobil)
                                 return
                             
@@ -330,65 +337,65 @@ def mengubahDataMobil(mobil):
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
                         
                     elif i == "transmisi":
-                        transmisi = input("Masukkan transmisi (AT/MT): ").upper()
+                        transmisi = input("Masukkan Transmisi (AT/MT): ").upper()
                         
                         while True:    
                             j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                             if j == "ya":
                                 mobil[plat]["transmisi"] = transmisi.capitalize()
-                                print("\nData Mobil Berhasil Diubah.\n")
+                                print("\nData mobil berhasil diubah.\n")
                                 return
                             
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
 
                     elif i == "warna":
-                        warna = input("Masukkan warna : ")
+                        warna = input("Masukkan Warna : ")
                         j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                         while True:
                             if j == "ya":
                                 mobil[plat.upper()]["warna"] = warna.capitalize()
-                                print("\nData Mobil Berhasil Diubah.\n")
+                                print("\nData mobil berhasil diubah.\n")
                                 return
                             
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
 
                     elif i == "bahanbakar" or i == "bahan bakar":
-                        bahanBakar = input("Masukkan bahan bakar : ")
+                        bahanBakar = input("Masukkan Bahan Bakar : ")
                         j = input("Data Jadi Diganti (ya/tidak): ").lower()
                         
                         while True:
                             if j == "ya":
                                 mobil[plat.upper()]["bahanBakar"] = bahanBakar.capitalize()    
-                                print("\nData Mobil Berhasil Diubah.\n")
+                                print("\nData mobil berhasil diubah.\n")
                                 return
                             
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
 
                     else:
-                        print("Input Salah.\n")
+                        print("Input salah.\n")
                     
             elif j == "tidak":
                 return
             
             else:
-                print("Input Salah.\n")
+                print("Input salah.\n")
 
 
 def menuMenghapusMobilAdmin(mobil):
@@ -410,24 +417,27 @@ def menuMenghapusMobilAdmin(mobil):
                 print("Input salah.\n")
         
         else:
-            print("\nData Mobil Tidak Ada.\n")
+            print("\nData mobil tidak ada.\n")
             return
 
 
 def menghapusMobil(mobil):
-    plat = input("\nPlat yang akan dihapus : ").upper()
+    plat = input("\nPlat Yang Akan Dihapus : ").upper()
+    
     if plat in mobil:
         while True:
             print(f"\nData Mobil\n\n- Plat : {plat}\n- Mobil : {mobil[plat]["mobil"]}\n- Harga : {mobil[plat]["harga"]}\n- Transmisi : {mobil[plat]["transmisi"]}\n- Warna : {mobil[plat]["warna"]}\n- Bahan Bakar : {mobil[plat]["bahanBakar"]}\n")
             j = input("Data Jadi Dihapus (ya/tidak): ").lower()
             
             if j == "ya":
+                
                 if mobil[plat]["statusPinjam"] == False:
                     mobil.pop(plat)
-                    print("Mobil Berhasil Dihapus.\n")
+                    print("Mobil berhasil dihapus.\n")
                     return
+                
                 else:
-                    print("Mobil Sedang Dipinjam!\n")
+                    print("Mobil sedang dipinjam!\n")
                     return
                 
             elif j == "tidak":
@@ -485,6 +495,7 @@ def menuMenampilkanDataCustomerAdmin():
 def printDataCustomer():
     if len(customer) != 0:
         values = []
+        
         for i, j in customer.items():
             innerValues = []
             innerValues.append(i)
@@ -509,7 +520,7 @@ def printDataCustomer():
         print(tabulate(values, headers=["No. Telpon", "Nama", "Alamat", "Mobil"], tablefmt="grid"))
         
     else:
-        print("\nData Customer Tidak Ada.\n")
+        print("\nData customer tidak ada.\n")
 
 
 def printDataCustomerTelpon():
@@ -523,6 +534,7 @@ def printDataCustomerTelpon():
         mobilPinjam = ""
 
         if len(customer[noTelpon]["mobil"]) != 0:
+            
             for i in range(len(customer[noTelpon]["mobil"])):
                 mobilPinjam += customer[noTelpon]["mobil"][i]
                 
@@ -534,7 +546,7 @@ def printDataCustomerTelpon():
         print(f"\n\n-No Telpon : {noTelpon}\n-Nama : {customer[noTelpon]["nama"]}\n-Alamat : {customer[noTelpon]["alamat"]}\n-Mobil di Pinjam : {mobilPinjam}")
     
     else:
-        print("\nData Customer Tidak Ada.\n")
+        print("\nData customer tidak ada.\n")
 
 
 def menuMengubahDataCustomerAdmin(customer):
@@ -556,94 +568,100 @@ def menuMengubahDataCustomerAdmin(customer):
                 print("Input salah.\n")
 
         else:
-            print("\nData Customer Tidak Ada.\n")
+            print("\nData customer tidak ada.\n")
             return
 
 
 def mengubahDataCustomerAdmin(customer):
-    noTelpon = input("\nMasukkan no. telpon customer : ")
+    noTelpon = input("\nMasukkan No. Telpon Customer : ")
         
     if noTelpon not in customer:
         print(f"\nNo. telpon customer {noTelpon} tidak ada.")
         return
 
     else:
+        
         while True:
             print(f"\n\n-No Telpon : {noTelpon}\n-Nama : {customer[noTelpon]["nama"]}\n-Alamat : {customer[noTelpon]["alamat"]}")
             j = input("\nData Jadi Diganti (ya/tidak): ").lower()
                 
             if j == "ya":
+                
                 while True:
-                        i = input("\nData yang ingin diubah : ").lower()
+                        i = input("\nData Yang Ingin Diubah : ").lower()
 
                         if i == "no telpon" or i == "notelpon" or i == "telpon":
+                            
                             while True:
-                                noTelponBaru = input(f"No. Telpon {noTelpon} akan diganti dengan : ")
+                                noTelponBaru = input(f"No. Telpon {noTelpon} Akan Diganti Dengan : ")
+                               
                                 if noTelponBaru.isnumeric() and noTelponBaru[0] == '0' and noTelponBaru[1] == '8' and 9 < len(noTelponBaru) < 14:
+                                   
                                     if noTelponBaru not in customer:
+                                        
                                         while True:
                                             j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                                             if j == "ya":
                                                 customer[noTelponBaru] = customer.pop(noTelpon)
-                                                print("\nNo. Telpon Berhasil Diganti.\n")
+                                                print("\nNo. telpon berhasil diganti.\n")
                                                 return
                                             
                                             elif j == "tidak":
                                                 return
                                             
                                             else:
-                                                print("Input Salah.\n")
+                                                print("Input salah.\n")
 
                                     else: 
-                                        print(f"\nNo. Telpon {noTelponBaru} Sudah Terdaftar.\n")
+                                        print(f"\nNo. telpon {noTelponBaru} sudah terdaftar.\n")
                                         return
                                 
                                 else:
                                     print("Maaf input no. telpon anda salah\n")
                         
                         elif i == "nama":
-                            nama = input("Masukkan nama : ")
+                            nama = input("Masukkan Nama : ")
                             
                             while True:
                                 j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                                 if j == "ya":
                                     customer[noTelpon]["nama"] = nama.capitalize()
-                                    print("\nData Customer Berhasil Diubah.\n")
+                                    print("\nData customer berhasil diubah.\n")
                                     return
                                 
                                 elif j == "tidak":
                                     return
                                 
                                 else:
-                                    print("Input Salah.\n")
+                                    print("Input salah.\n")
                         
                         elif i == "alamat":
-                            alamat = input("Masukkan alamat : ")
+                            alamat = input("Masukkan Alamat : ")
                             
                             while True:
                                 j = input("Data Jadi Diganti (ya/tidak): ").lower()
 
                                 if j == "ya":
                                     customer[noTelpon]["alamat"] = alamat.capitalize()
-                                    print("\nData Customer Berhasil Diubah.\n")
+                                    print("\nData customer berhasil diubah.\n")
                                     return
                                 
                                 elif j == "tidak":
                                     return
                                 
                                 else:
-                                    print("Input Salah.\n")
+                                    print("Input salah.\n")
 
                         else:
-                            print("Input Salah.\n")
+                            print("Input salah.\n")
                         
             elif j == "tidak":
                 return
             
             else:
-                print("Input Salah.\n")
+                print("Input salah.\n")
 
 
 def menuMenghapusDataCustomerAdmin(customer):
@@ -666,25 +684,28 @@ def menuMenghapusDataCustomerAdmin(customer):
                 print("Input salah.\n")
         
         else:
-            print("\nData Customer Tidak Ada.\n")
+            print("\nData customer tidak ada.\n")
             return
 
 
 def menghapusDataCustomer(customer):
-    noTelpon = input("\nMasukkan no. telpon customer yang akan dihapus : ")
+    noTelpon = input("\nMasukkan No. Telpon Customer Yang Akan Dihapus : ")
     
     if noTelpon in customer:
+        
         while True:
             print(f"\n\n-No Telpon : {noTelpon}\n-Nama : {customer[noTelpon]["nama"]}\n-Alamat : {customer[noTelpon]["alamat"]}")
             j = input("/nData Jadi Dihapus (ya/tidak): ").lower()
             
             if j == "ya":
+        
                 if len(customer[noTelpon]["mobil"]) != 0:
                     customer.pop(noTelpon)
-                    print("Data Customer Berhasil Dihapus.\n")
+                    print("Data customer berhasil dihapus.\n")
                     return
+                
                 else:
-                    print("Customer Sedang Meminjam Mobil!\n")
+                    print("Customer sedang meminjam mobil!\n")
                     return
                 
             elif j == "tidak":
@@ -698,7 +719,6 @@ def menghapusDataCustomer(customer):
 
 
 def menuMengubahStatusMobilPinjam(mobil, customer):
-    
     if printDataMobilPinjam():
         
         while True:
@@ -721,6 +741,7 @@ def menuMengubahStatusMobilPinjam(mobil, customer):
 def printDataMobilPinjam():
     if len(mobil) != 0:
         values = []
+        
         for i, j in mobil.items():
             if j["statusPinjam"]:
                 innerValues = []
@@ -743,13 +764,12 @@ def printDataMobilPinjam():
             return False
     
     else: 
-        print("\nData Mobil Tidak Ada\n")
+        print("\nData mobil tidak ada\n")
         return False
 
 
 def menambahLamaHariPeminjaman(mobil):
-    
-    plat = input("\nMasukkan plat mobil : ").upper()
+    plat = input("\nMasukkan Plat Mobil : ").upper()
         
     if plat not in mobil:
         print("\nPlat mobil tidak ada.")
@@ -798,7 +818,7 @@ def menambahLamaHariPeminjaman(mobil):
 
 
 def menghapusPeminjamanMobil(mobil,customer):
-    plat = input("\nMasukkan plat mobil : ").upper()
+    plat = input("\nMasukkan Plat Mobil : ").upper()
         
     if plat not in mobil:
         print("\nPlat mobil tidak ada.")
@@ -825,7 +845,7 @@ def menghapusPeminjamanMobil(mobil,customer):
                         return
                     
                     else:
-                        print("Input Salah.\n")
+                        print("Input salah.\n")
 
     else:
         print("Mobil sedang tidak dipinjam.\n")  
@@ -834,26 +854,28 @@ def menghapusPeminjamanMobil(mobil,customer):
 #Customer
 def loginCustomer(login, mobil, customer):
     while True:
+        
         if login in customer:
-            password = input("Masukkan password anda : ")
+            password = input("Masukkan Password Anda : ")
             
             if password == customer[login]["password"]:
                 menuCustomer(login, mobil, customer)
             
             else:
                 print("Maaf password anda salah !!!\n")
-                i = input("Masukkan password lagi? (ya/tidak) ")
+                i = input("Masukkan Password Lagi? (ya/tidak) ")
 
                 if i.lower() != "ya":
                     break
         else:
+            
             while True:
-                buatAkun = input("Nomor telpon anda belum terdaftar, ingin membuat akun (ya/tidak) : ")
+                buatAkun = input("Nomor Telpon Anda Belum Terdaftar, Ingin Membuat Akun (ya/tidak) : ")
 
                 if buatAkun.lower() == "ya":
-                    password = input("Masukkan password anda : ")
-                    nama = input("\nMasukkan nama anda : ")
-                    alamat = input("\nMasukkan alamat anda : ")
+                    password = input("Masukkan Password Anda : ")
+                    nama = input("\nMasukkan Nama Anda : ")
+                    alamat = input("\nMasukkan Alamat Anda : ")
 
                     customer[login] = {"password" : password, "nama" : nama.capitalize(), "alamat" : alamat, "mobil" : []}
 
@@ -917,31 +939,34 @@ def merubahDataCustomer(login, customer):
                     
         if j == "ya":
             while True:
-                    i = input("\nData yang ingin diubah : ").lower()
+                    i = input("\nData Yang Ingin Diubah : ").lower()
 
                     if i == "no telpon" or i == "notelpon" or i == "telpon":
                         
                         while True:
-                            noTelponBaru = input(f"No. Telpon {login} akan diganti dengan : ")
+                            noTelponBaru = input(f"No. Telpon {login} Akan Diganti Dengan : ")
+                            
                             if noTelponBaru.isnumeric() and noTelponBaru[0] == '0' and noTelponBaru[1] == '8' and 9 < len(noTelponBaru) < 14:
+                            
                                 if noTelponBaru not in customer:
+                            
                                     while True:
                                         j = input("Data Jadi Diganti dan Melakukan Login Ulang (ya/tidak): ").lower()
 
                                         if j == "ya":
                                             customer[noTelponBaru] = customer.pop(login)
-                                            print("\nNo. Telpon Berhasil Diganti.\n")
-                                            print("Silahkan Login Ulang.")
+                                            print("\nNo. telpon berhasil diganti.\n")
+                                            print("Silahkan login ulang.")
                                             menuAwalLogin(mobil, customer)
                                         
                                         elif j == "tidak":
                                             return
                                         
                                         else:
-                                            print("Input Salah.\n")
+                                            print("Input salah.\n")
 
                                 else: 
-                                    print(f"\nNo. Telpon {noTelponBaru} Sudah Terdaftar.\n")
+                                    print(f"\nNo. telpon {noTelponBaru} sudah terdaftar.\n")
                                     return
                             
                             else:
@@ -955,14 +980,14 @@ def merubahDataCustomer(login, customer):
 
                             if j == "ya":
                                 customer[login]["nama"] = nama.capitalize()
-                                print("\nData Customer Berhasil Diubah.\n")
+                                print("\nData customer berhasil diubah.\n")
                                 return
                             
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
                     
                     elif i == "alamat":
                         alamat = input("Masukkan alamat : ")
@@ -972,23 +997,23 @@ def merubahDataCustomer(login, customer):
 
                             if j == "ya":
                                 customer[login]["alamat"] = alamat.capitalize()
-                                print("\nData Customer Berhasil Diubah.\n")
+                                print("\nData customer berhasil diubah.\n")
                                 return
                             
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
 
                     else:
-                        print("Input Salah.\n")
+                        print("Input salah.\n")
                 
         elif j == "tidak":
             return
         
         else:
-            print("Input Salah.\n")
+            print("Input salah.\n")
 
 
 def merubahPasswordCustomer(login, customer):
@@ -1001,24 +1026,22 @@ def merubahPasswordCustomer(login, customer):
             
             if passwordBaru !=  customer[login]["password"]:
                 customer[login]["password"] = passwordBaru
-                print("\nPassword Anda Berhasil Diganti, Silahkan Login Ulang.\n\n")
+                print("\nPassword anda berhasil diganti, silahkan login ulang.\n\n")
                 menuAwalLogin(login, customer)
             
             else:
-                print("Password Baru Anda Sama Dengan Password Lama.")
+                print("Password baru anda sama dengan password lama.")
         
         elif j == "tidak":
             return
         
         else:
-            print("Input Salah.\n")
+            print("Input salah.\n")
 
 
 def menuDataMobilCustomer(login, customer, mobil):
-    while True:
-        
+      while True:
         print("\n---------------- Data Mobil -----------------\n\n")
-        
         print("[1] Melihat Daftar Mobil\n[2] Meminjam Mobil\n[3] Melihat Data Mobil Yang Sedang Anda Pinjam\n[4] Kembali")
         i = input("Input Index Menu : ")
 
@@ -1071,12 +1094,13 @@ def printMobilFilter(kolom):
     values = []
         
     if kolom != "harga":
-        filter = input("Mencari data : ").capitalize()
+        filter = input("Mencari Data : ").capitalize()
 
         if filter == "At" or filter == "Mt":
             filter = filter.upper()
 
         for i,j in mobil.items():
+           
             if j[kolom] == filter:
                 innerValues = []
                 innerValues.append(i)
@@ -1097,8 +1121,8 @@ def printMobilFilter(kolom):
 
     else:
         while True:
-            max = input("Masukkan harga maksimal : ")
-            min = input("Masukkan harga minimal : ")
+            max = input("Masukkan Harga Maksimal : ")
+            min = input("Masukkan Harga Minimal : ")
 
             if max.isnumeric() and min.isnumeric():
                 
@@ -1109,7 +1133,7 @@ def printMobilFilter(kolom):
                     print("Nilai minimal lebih tinggi dari maksimal.")
 
                     while True:
-                        k = input("Masih ingin melakukan filtering harga (ya/tidak) : ").lower()
+                        k = input("Masih Ingin Melakukan Filtering Harga (ya/tidak) : ").lower()
 
                         if k == "ya":
                             break
@@ -1118,13 +1142,13 @@ def printMobilFilter(kolom):
                             return
                         
                         else:
-                            print("Input Salah.\n")
+                            print("Input salah.\n")
             
             else:
                 print("Input Salah.\n")
                 
                 while True:
-                    k = input("Masih ingin melakukan filtering harga (ya/tidak) : ").lower()
+                    k = input("Masih Ingin Melakukan Filtering Harga (ya/tidak) : ").lower()
 
                     if k == "ya":
                         break
@@ -1133,7 +1157,7 @@ def printMobilFilter(kolom):
                         return
                     
                     else:
-                        print("Input Salah.\n")
+                        print("Input salah.\n")
         
         for i,j in mobil.items():
             if j[kolom] <= int(max) and j[kolom] >= int(min):
@@ -1165,7 +1189,7 @@ def meminjamMobil(login, customer, mobil):
             i = input("Ingin Meminjam Mobil (ya/tidak) : ").lower()
 
             if i == "ya":
-                plat = input("\nMasukkan plat mobil : ").upper()
+                plat = input("\nMasukkan Plat Mobil : ").upper()
                 
                 if plat in mobil:
                     
@@ -1173,19 +1197,21 @@ def meminjamMobil(login, customer, mobil):
                         print(f"\n\n-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Harga : {mobil[plat]["harga"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n")
                         
                         while True:
-                            j = input("Ingin meminjam mobil ini (ya/tidak): ").lower()
+                            j = input("Ingin Meminjam Mobil Ini (ya/tidak): ").lower()
 
                             if j == "ya":
+                                
                                 while True:
-                                    lamaHari = input("\nMasukkan lama hari mobil akan dipinjam : ")
+                                    lamaHari = input("\nMasukkan Lama Hari Mobil Akan Dipinjam : ")
 
                                     if lamaHari.isnumeric():
                                         break
 
                                     else:
                                         print("Input Salah.\n")
+                                        
                                         while True:
-                                            j = input("Melanjutkan peminjaman mobil (ya/tidak) : ")
+                                            j = input("Melanjutkan Peminjaman Mobil (ya/tidak) : ")
 
                                             if j.lower() == "ya":
                                                 break
@@ -1199,7 +1225,7 @@ def meminjamMobil(login, customer, mobil):
                                 while True:
                                     hargaDriver = 100000 
                                     hargaPengantaranMobil = 50000 
-                                    driver = input("\nApakah ingin menggunakan jasa driver dengan biaya 100 ribu / hari (ya/tidak) : ").lower()
+                                    driver = input("\nApakah Ingin Menggunakan Jasa Driver Dengan Biaya 100 Ribu / Hari (ya/tidak) : ").lower()
 
                                     if driver == "ya":
                                         hargaPengantaranMobil = 0
@@ -1209,7 +1235,7 @@ def meminjamMobil(login, customer, mobil):
                                         hargaDriver = 0
 
                                         while True:
-                                            antar = input("\nApakah mobil ingin diantar kerumah dengan biaya 50 ribu (ya/tidak) : ").lower()
+                                            antar = input("\nApakah Mobil Ingin Diantar Kerumah Dengan Biaya 50 Ribu (ya/tidak) : ").lower()
 
                                             if antar == "ya":
                                                 break
@@ -1219,12 +1245,12 @@ def meminjamMobil(login, customer, mobil):
                                                 break
 
                                             else:
-                                                print("Input Salah.\n")
+                                                print("Input salah.\n")
 
                                         break
 
                                     else:
-                                        print("Input Salah.\n")
+                                        print("Input salah.\n")
 
                                 print("\n---- Detail Harga Total Peminjaman Mobil ----\n\n")
                                 print(f"-Plat Mobil : {plat}\n-Mobil : {mobil[plat]["mobil"]}\n-Transmisi : {mobil[plat]["transmisi"]}\n-Bahan Bakar : {mobil[plat]["bahanBakar"]}\n-Warna : {mobil[plat]["warna"]}\n\n-Harga :                       \t{mobil[plat]["harga"]}")
@@ -1237,7 +1263,7 @@ def meminjamMobil(login, customer, mobil):
                                 print(f"\n\nTotal Harga :                  \t{totalPembayaran}\n\n")
 
                                 while True:
-                                    j = input("Apakah jadi melakukan peminjaman (ya/tidak) : ").lower()
+                                    j = input("Apakah Jadi Melakukan Peminjaman (ya/tidak) : ").lower()
 
                                     if j == "ya":
                                         customer[login]["mobil"].append(plat)
@@ -1260,13 +1286,13 @@ def meminjamMobil(login, customer, mobil):
                                         return
                                     
                                     else:
-                                        print("Input Salah.\n")
+                                        print("Input salah.\n")
 
                             elif j == "tidak":
                                 return
                             
                             else:
-                                print("Input Salah.\n")
+                                print("Input salah.\n")
 
                     else:
                         print(f"\nMaaf mobil dengan plat {plat} sedang di pinjam.")
@@ -1280,13 +1306,15 @@ def meminjamMobil(login, customer, mobil):
                 return
             
             else:
-                print("Input Salah.\n")
+                print("Input salah.\n")
 
 
 def printMobilSiapPinjam():
     if len(mobil) != 0:
         values = []
+        
         for i, j in mobil.items():
+            
             if j["statusPinjam"] == False:
                 innerValues = []
                 innerValues.append(i)
@@ -1307,7 +1335,7 @@ def printMobilSiapPinjam():
             return False
     
     else: 
-        print("\nData Mobil Tidak Ada. Harap Hubungi Admin\n")
+        print("\nData mobil tidak ada. Harap hubungi admin\n")
         return False
 
 
@@ -1315,6 +1343,7 @@ def printDataPinjamMobilCustomer(login):
     if len(customer[login]["mobil"]) != 0:
         print("\n\n")
         values = []
+        
         for i in customer[login]["mobil"]:
             innerValues = []
             innerValues.append(i)
