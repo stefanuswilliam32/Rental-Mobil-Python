@@ -1256,8 +1256,8 @@ def meminjamMobil(login, customer, mobil):
                                                 print("Input Salah.\n")
                                 
                                 while True:
-                                    hargaDriver = 100000 
-                                    hargaPengantaranMobil = 50000 
+                                    hargaDriver = 100000 #Harga Drive per Hari
+                                    hargaPengantaranMobil = 50000  #Harga jika mobil diantarkan dirumah
                                     driver = input("\nApakah Ingin Menggunakan Jasa Driver Dengan Biaya 100 Ribu / Hari (ya/tidak) : ").lower()
 
                                     if driver == "ya":
