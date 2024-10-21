@@ -888,10 +888,18 @@ def loginCustomer(login, mobil, customer):
             
             else:
                 print("Maaf password anda salah !!!\n")
-                i = input("Masukkan Password Lagi? (ya/tidak) ")
+                
+                while True:
+                    i = input("Masukkan Password Lagi? (ya/tidak) ").lower()
 
-                if i.lower() != "ya":
-                    break
+                    if i == "ya":
+                        break
+
+                    elif i == "tidak":
+                        return
+
+                    else:
+                        print("Input salah.")
         else:
             
             while True:
