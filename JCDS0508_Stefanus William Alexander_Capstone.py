@@ -890,7 +890,7 @@ def loginCustomer(login, mobil, customer):
                 print("Maaf password anda salah !!!\n")
                 
                 while True:
-                    i = input("Masukkan Password Lagi? (ya/tidak) ").lower()
+                    i = input("Masukkan Password Lagi (ya/tidak) : ").lower()
 
                     if i == "ya":
                         break
