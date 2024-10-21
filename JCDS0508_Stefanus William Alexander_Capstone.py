@@ -20,11 +20,9 @@ customer = {"082121025700" : {"password" : "12345678", "nama" : "Willy", "alamat
 
 #Login
 def menuAwalLogin(mobil, customer):
-    print("\n\n------------------ GG Rental ------------------\n")
-            
-    print("Halo Selamat Datang\n\n")
-
     while True:
+        print("\n\n------------------ GG Rental ------------------\n")
+        print("Halo Selamat Datang\n\n")
         login = input("Tolong masukkan no telpon anda dengan format (08xxxxxxxxxx) : ")
 
         if login == passwordAdmin:
@@ -849,26 +847,26 @@ def loginCustomer(login, mobil, customer):
                 if i.lower() != "ya":
                     break
         else:
-            buatAkun = input("Nomor telpon anda belum terdaftar, ingin membuat akun (ya/tidak) : ")
+            while True:
+                buatAkun = input("Nomor telpon anda belum terdaftar, ingin membuat akun (ya/tidak) : ")
 
-            if buatAkun.lower() == "ya":
-                password = input("Masukkan password anda :\n")
-                nama = input("\nMasukkan nama anda :\n")
-                alamat = input("\nMasukkan alamat anda :\n")
+                if buatAkun.lower() == "ya":
+                    password = input("Masukkan password anda : ")
+                    nama = input("\nMasukkan nama anda : ")
+                    alamat = input("\nMasukkan alamat anda : ")
 
-                customer[login] = {"password" : password, "nama" : nama.capitalize(), "alamat" : alamat, "mobil" : []}
+                    customer[login] = {"password" : password, "nama" : nama.capitalize(), "alamat" : alamat, "mobil" : []}
 
-                print("Akun anda berhasil dibuat\n\n")
+                    print("Akun anda berhasil dibuat\n\n")
 
-                menuCustomer(login, mobil, customer)
+                    menuCustomer(login, mobil, customer)
 
-            elif buatAkun.lower() == "tidak":
-                print("Terima kasih")
-                break
-            
-            else:
-                print("Maaf input anda salah.")
-                break
+                elif buatAkun.lower() == "tidak":
+                    print("Terima kasih\n")
+                    return
+                
+                else:
+                    print("Maaf input anda salah.\n")
 
 
 def menuCustomer(login, mobil, customer):
