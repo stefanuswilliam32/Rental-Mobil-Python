@@ -39,7 +39,7 @@ def menuAwalLogin(mobil, customer):
 def menuAdmin(mobil, customer):
     while True:
         print("\n\n------------------ Admin ------------------\n\n")
-        print("[1] Data Mobil\n[2] Data Customer\n[3] Mengubah Status Mobil Yang Sedang Dipinjam\n[4] Logout")
+        print("[1] Data Mobil\n[2] Data Customer\n[3] Mengubah Status Mobil Yang Sedang Dipinjam\n[4] Logout\n[5] Mematikan Sistem\n")
         i = input("Input index menu : ")
 
         if i == "1":
@@ -53,6 +53,9 @@ def menuAdmin(mobil, customer):
 
         elif i == "4":
             menuAwalLogin(mobil,customer)
+
+        elif i == "5":
+            mematikanSitemAdmin()
 
         else:
             print("Input salah.\n")
@@ -849,6 +852,28 @@ def menghapusPeminjamanMobil(mobil,customer):
 
     else:
         print("Mobil sedang tidak dipinjam.\n")  
+
+
+def mematikanSitemAdmin():
+    while True:
+        j = input("Yakin Ingin Mematikan Sistem (ya/tidak) : ").lower()
+
+        if j == "ya":
+            password = input("Silahkan Memasukkan Password Admin Untuk Metatikan Sistem : ")
+
+            if password == passwordAdmin:
+                print("\nSistem dimatikan.")
+                exit()
+            
+            else:
+                print("\nPassword admin salah.")
+                return
+        
+        elif j == "tidak":
+            return
+        
+        else:
+            print("Input salah.\n")
 
 
 #Customer
